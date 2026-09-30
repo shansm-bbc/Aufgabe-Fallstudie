@@ -8,6 +8,7 @@ import ChronicleDetailRoute from "./routes/ChronicleDetailRoute.jsx";
 import ChronicleCreateRoute from "./routes/ChromicleCreateRoute";
 import ChronicleEditRoute from "./routes/ChronicleEditRoute";
 import ErrorPage from "./components/ErrorPage";
+import SignInRoute from "./routes/SignInRoute";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         element: <ChronicleEditRoute />,
         loader: ChronicleEditRoute.loader,
         action: ChronicleEditRoute.action,
+      },
+      {
+        path: "/auth/signin",
+        element: <SignInRoute />,
       },
     ],
   },
