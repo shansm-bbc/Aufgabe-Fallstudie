@@ -5,13 +5,15 @@ import "./index.css";
 import App from "./App.jsx";
 import ChronicleListRoute from "./routes/ChronicleListRoute.jsx";
 import ChronicleDetailRoute from "./routes/ChronicleDetailRoute.jsx";
-import Header from "./components/Header";
 import ChronicleCreateRoute from "./routes/ChromicleCreateRoute";
+import ChronicleEditRoute from "./routes/ChronicleEditRoute";
+import ErrorPage from "./components/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -28,6 +30,12 @@ const router = createBrowserRouter([
         element: <ChronicleCreateRoute />,
         action: ChronicleCreateRoute.action,
         errorElement: <div>Oops! Ein Fehler is aufgetreten</div>,
+      },
+      {
+        path: "/chronicles/:id/edit",
+        element: <ChronicleEditRoute />,
+        loader: ChronicleEditRoute.loader,
+        action: ChronicleEditRoute.action,
       },
     ],
   },
