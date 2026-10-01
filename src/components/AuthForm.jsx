@@ -1,10 +1,10 @@
 import { useNavigate, Form } from "react-router";
-import { signin } from "@/lib/signin";
 import styles from "./AuthForm.module.css";
 import Button from "./Button";
 import ButtonGroup from "./ButtonGroup";
+import Input from "./Input";
 
-export default function AuthForm() {
+export default function AuthForm({ errors = {} }) {
   const navigate = useNavigate();
   const goBack = () => {
     return navigate("/");
@@ -29,19 +29,21 @@ export default function AuthForm() {
 
   return (
     <>
-      <Form className={styles.authform} method="post">
+      <Form className={styles.authform} method="post" noValidate>
         <label htmlFor="email">E-Mail:</label>
-        <input
+        <Input
           id="email"
           name="email"
           type="email"
+          error={errors.email}
           placeholder="Bitte E-Mail Adresse eingeben"
         />
         <label htmlFor="password">Passwort:</label>
-        <input
+        <Input
           id="password"
           name="password"
           type="password"
+          error={errors.password}
           placeholder="Bitte Passwort eingeben"
         />
         <ButtonGroup className={styles.buttons}>
