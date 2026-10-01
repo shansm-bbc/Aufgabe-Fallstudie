@@ -1,15 +1,23 @@
-import { redirect, useNavigate } from "react-router";
+import { redirect, useActionData, useNavigate } from "react-router";
 import ChronicleForm from "@/components/ChronicleForm";
 import { createChronicle } from "@/lib/chronicles";
+import { validateChronicle } from "@/lib/validateChronicle";
 
 async function clientAction({ request, params }) {
   const formData = await request.formData();
   const chronicle = Object.fromEntries(formData);
+
+  const { errors, isValid } = validateChronicle(chronicle);
+  if (!isValid) {
+    return errors;
+  }
+
   await createChronicle(chronicle);
   return redirect("/");
 }
 
 export default function ChronicleCreateRoute() {
+  const errors = useActionData();
   const navigate = useNavigate();
   const goBack = () => {
     navigate("/");
@@ -17,7 +25,7 @@ export default function ChronicleCreateRoute() {
   return (
     <>
       <h2>Neue Chronik erstellen</h2>
-      <ChronicleForm onCancel={goBack} />
+      <ChronicleForm onCancel={goBack} errors={errors} />
     </>
   );
 }
