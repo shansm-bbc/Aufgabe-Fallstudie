@@ -1,26 +1,25 @@
-import AuthForm from "@/components/AuthForm";
-import { signin } from "@/lib/signin";
+import RegistrationForm from "@/components/RegisterForm";
 import { saveSession } from "@/lib/session";
+import { signup } from "@/lib/signup";
 import { redirect } from "react-router";
 
 async function clientAction({ request }) {
   const formData = await request.formData();
   const user = Object.fromEntries(formData);
-
-  const response = await signin(user);
+  const response = await signup(user);
   saveSession(response);
   const param = new URLSearchParams(location.search);
   const path = param.get("path");
   return redirect(path ?? "/");
 }
 
-export default function SignInRoute() {
+export default function SignUpRoute() {
   return (
     <>
-      <h2>Anmelden</h2>
-      <AuthForm />
+      <h2>Registration</h2>
+      <RegistrationForm />
     </>
   );
 }
 
-SignInRoute.action = clientAction;
+SignUpRoute.action = clientAction;

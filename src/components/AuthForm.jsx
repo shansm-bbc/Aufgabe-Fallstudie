@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, Form } from "react-router";
 import { signin } from "@/lib/signin";
 import styles from "./AuthForm.module.css";
 import Button from "./Button";
@@ -10,26 +10,26 @@ export default function AuthForm() {
     return navigate("/");
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const inputValues = Object.fromEntries(formData);
+  //   const onSubmit = async (e) => {
+  //     e.preventDefault();
+  //     const formData = new FormData(e.target);
+  //     const inputValues = Object.fromEntries(formData);
 
-    const user = {
-      email: inputValues.email,
-      password: inputValues.password,
-    };
+  //     const user = {
+  //       email: inputValues.email,
+  //       password: inputValues.password,
+  //     };
 
-    try {
-      const data = await signin(user);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     try {
+  //       const data = await signin(user);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
   return (
     <>
-      <form className={styles.authform} onSubmit={onSubmit}>
+      <Form className={styles.authform} method="post">
         <label htmlFor="email">E-Mail:</label>
         <input
           id="email"
@@ -53,7 +53,7 @@ export default function AuthForm() {
             onClick={goBack}
           ></Button>
         </ButtonGroup>
-      </form>
+      </Form>
     </>
   );
 }

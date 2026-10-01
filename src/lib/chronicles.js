@@ -1,5 +1,7 @@
 const URL = "http://localhost:8080";
 
+import { getJWTToken } from "./session";
+
 export async function fetchChronicles() {
   const response = await fetch("http://localhost:8080/chronicles");
   if (!response.ok) {
@@ -23,6 +25,7 @@ export async function createChronicle(chronicle) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${getJWTToken()}`,
     },
     body: JSON.stringify(chronicle),
   });
@@ -40,6 +43,7 @@ export async function updateChronicle(chronicle) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${getJWTToken()}`,
       },
       body: JSON.stringify(chronicle),
     },
@@ -54,6 +58,9 @@ export async function updateChronicle(chronicle) {
 export async function deleteChronicle(id) {
   const response = await fetch(`http://localhost:8080/chronicles/${id}`, {
     method: "DELETE",
+    headers: {
+      authorization: `Bearer ${getJWTToken()}`,
+    },
   });
   if (!response.ok) {
     throw new Error(`HTTP Error: status ${response.status}`);
